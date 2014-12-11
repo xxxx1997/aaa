@@ -5,13 +5,14 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use frontend\widgets\Alert;
+use yii\web\Session;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
 
-
 AppAsset::register($this);
 ?>
+
 <!DOCTYPE HTML>
 <!--[if lt IE 7]> <html dir="ltr" lang="zh-cn" id="ie6"> <![endif]-->
 <!--[if IE 7]>    <html dir="ltr" lang="zh-cn" id="ie7"> <![endif]-->
@@ -148,10 +149,18 @@ In.add('pcas',{path:"resource/js/system/PCASClass.js",type:'js'});
             	<!--用户登录注册 start-->
             	<div class="user_box clearfix grid_5">
                 	<!--注册登录按钮 start-->
+                          <?php $session = new Session();
+                                $session->open();
+                                if($session['user']["user_name"]==""){
+                                ?>
                   	<ul id="login_sub" class="user_login ">
-                        <li><a href="index.php?r=loing_do" class="m_h">免费注册</a></li>
-                        <li><a href="index.php?r=loing_do">登录</a></li>
+                        <li><a href="index.php?r=login/regist" class="m_h">免费注册</a></li>
+                        <li><a href="index.php?r=login/login">登录</a></li>
+                        
                     </ul>
+                        <?php
+                                }else{
+                        ?>
                     <!--注册登录按钮 end--> 
 <div class="clear"></div>
 
@@ -159,12 +168,16 @@ In.add('pcas',{path:"resource/js/system/PCASClass.js",type:'js'});
 
 
                     <!--登录成功 start-->
-                    <div id="logined" class="hidden">
+                    
+                    <div id="logined" class="">
                     	<!--用户登录后内容 start-->
                         <ul class="user_logined clearfix">
                             <li id="avatar">
                             	<a href="index.php?do=user" title="" rel="user_menu">
-                            		<img src='http://www.weike.com/data/avatar/default/man_small.jpg' uid='' class='pic_small'>                                    <span class="user_named m_h"></span>
+                            		<img src='http://www.wei.com/data/avatar/default/man_small.jpg' uid='11' class='pic_small'> 
+                                        <span class="user_named m_h"><?php $session = new Session();
+                                        $session->open();
+                                        echo $session['user']["user_name"];?></span>
                             	</a>
 <!--用户登录后导航菜单 start-->
                     <div id="user_menu" class="user_nav_pop grid_5 alpha omega hidden m_h">
@@ -173,10 +186,10 @@ In.add('pcas',{path:"resource/js/system/PCASClass.js",type:'js'});
                                         <li class="clearfix"><a href="index.php?do=release" title="发布任务" class="selected" ><div class="icon16 doc-new reverse"></div>发布任务</a></li>
 <li class="clearfix"><a href="index.php?do=shop_release" title="发布商品" class="selected"><div class="icon16 doc-new reverse"></div>发布商品</a></li>
 <li class="clearfix hidden" id="manage_center"><a href="control/admin/index.php" title="管理中心" ><div class="icon16 key reverse"></div>管理中心</a></li>
-<li class="clearfix"><a href="index.php?do=user&view=index" title="用户中心"><div class="icon16 cog reverse"></div>用户中心</a></li>
-<li class="clearfix"><a href="http://www.weike.com/index.php?do=space&member_id=" title="我的店铺" id="space"><div class="icon16 compass reverse"></div>我的店铺</a></li>
+<li class="clearfix"><a href="index.php?r=center/user_index" title="用户中心"><div class="icon16 cog reverse"></div>用户中心</a></li>
+<li class="clearfix"><a href="http://www.wei.com/index.php?do=space&member_id=11" title="我的店铺" id="space"><div class="icon16 compass reverse"></div>我的店铺</a></li>
 <!--<li class="clearfix"><a href="index.php?do=user&view=message" title="站内信"><div class="icon16 mail reverse"></div>站内信</a></li>-->
-<li class="clearfix"><a onclick="showWindow('out','index.php?do=logout');return false;" title="退出" href="index.php?do=logout">退出</a></li>
+<li class="clearfix"><a  title="退出" href="index.php?r=login/tuichu">退出</a></li>
                          </ul>
                     </div>
                     <!--用户登录后导航菜单 end-->
@@ -189,9 +202,10 @@ In.add('pcas',{path:"resource/js/system/PCASClass.js",type:'js'});
 
 
                     </div>
+                   <?php
+                      }
+                   ?>
                     <!--登录成功 end-->
-                    
-                    
                     <div class="clear"></div>
                 </div>
                 <!--用户登录注册 end-->
@@ -212,7 +226,7 @@ In.add('pcas',{path:"resource/js/system/PCASClass.js",type:'js'});
  <nav id="nav" class="nav m_h">
         <div class="container_24" >
         	<div class="menu grid_24 clearfix">
-                <ul class="clearfix">
+               <ul class="clearfix">
                 	                   		<li>
                    			<a href="index.php?do=index" class="selected" >
                    			<span>首页</span></a>
@@ -224,22 +238,22 @@ In.add('pcas',{path:"resource/js/system/PCASClass.js",type:'js'});
 </li>
 <li class="line"></li>
                    		<li>
-                   			<a href="index.php?do=shop_list"  >
+                   			<a href="index.php?r=shop/list"  >
                    			<span>威客商城</span></a>
 </li>
 <li class="line"></li>
                    		<li>
-                   			<a href="index.php?do=seller_list"  >
+                   			<a href="index.php?r=index/seller-list"  >
                    			<span>服务商</span></a>
 </li>
 <li class="line"></li>
                    		<li>
-                   			<a href="index.php?do=case"  >
+                   			<a href="index.php?r=case/case"  >
                    			<span>成功案例</span></a>
 </li>
 <li class="line"></li>
                    		<li>
-                   			<a href="index.php?do=article"  >
+                   			<a href="index.php?r=article/article"  >
                    			<span>资讯中心</span></a>
 </li>
 <li class="line"></li>
@@ -275,8 +289,9 @@ In.add('pcas',{path:"resource/js/system/PCASClass.js",type:'js'});
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
         <?= Alert::widget() ?>
-        <?= $content ?>
+        <?php echo  $content ?>
         </div>
+
 		<!--页脚 satrt-->
 <footer class="footer clearfix">
 <!--网站链接以及语言栏 关注我们 搜索 start-->
@@ -383,7 +398,6 @@ In('header_top','custom','lavalamp','tipsy','autoIMG','slides');
 
 
 </script>
-
 <!--[if IE 6]></div><![endif]-->
 <!--[if IE 7]></div><![endif]-->
 <!--[if IE 8]></div><![endif]-->
